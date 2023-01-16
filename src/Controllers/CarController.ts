@@ -1,7 +1,7 @@
 import { NextFunction, Request, Response } from 'express';
 import CarService from '../Services/CarService';
 
-class TransferController {
+export default class CarsController {
   private req: Request;
   private res: Response;
   private next: NextFunction;
@@ -20,9 +20,30 @@ class TransferController {
   }
 
   public async create() {
-    const cars = await this.service.create(this.req.body);
-    return this.res.status(201).json(cars);
+    try {
+      const cars = await this.service.create(this.req.body);
+      return this.res.status(201).json(cars);
+    } catch (error) {
+      this.next(error);
+    }
+  }
+
+  public async findAll() {
+    try {
+      const cars = await this.service.findAll();
+      return this.res.status(200).json(cars);
+    } catch (error) {
+      this.next(error);
+    }
+  }
+
+  public async findById() {
+    try {
+      const { id } = this.req.params;
+      const cars = await this.service.findById(id);
+      return this.res.status(200).json(cars);
+    } catch (error) {
+      this.next(error);
+    }
   }
 }
-
-export default TransferController;

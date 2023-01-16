@@ -53,4 +53,14 @@ export default class CarModel {
       seatsQty: car.getSeatsQty(),
     });
   }
+
+  public async findAll() {
+    const cars = await this.model.find({});
+    return cars;
+  }
+
+  public async findById(id: string) {
+    const cars = await this.model.findById(id);
+    return cars;
+  }
 }

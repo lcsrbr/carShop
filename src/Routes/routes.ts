@@ -8,6 +8,16 @@ routes.get(
   (req, res, next) => new CarController(req, res, next).count(),
 );
 
+routes.get(
+  '/cars',
+  (req, res, next) => new CarController(req, res, next).findAll(),
+);
+
+routes.get(
+  '/cars/:id',
+  (req, res, next) => new CarController(req, res, next).findById(),
+);
+
 routes.post(
   '/cars',
   (req, res, next) => new CarController(req, res, next).create(),
