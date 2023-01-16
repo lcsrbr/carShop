@@ -14,11 +14,15 @@ class TransferController {
     this.service = new CarService();
   }
 
-  public async count(){
-    const cars = await this.service.count()
-    return this.res.status(201).json({cars})
+  public async count() {
+    const cars = await this.service.count();
+    return this.res.status(201).json({ cars });
   }
 
+  public async create() {
+    const cars = await this.service.create(this.req.body);
+    return this.res.status(201).json(cars);
+  }
 }
 
 export default TransferController;
