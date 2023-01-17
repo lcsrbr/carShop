@@ -1,5 +1,6 @@
 import { NextFunction, Request, Response } from 'express';
 import CarService from '../Services/CarService';
+import ICar from '../Interfaces/ICar';
 
 export default class CarsController {
   private req: Request;
@@ -20,8 +21,9 @@ export default class CarsController {
   }
 
   public async create() {
+    const car: ICar = { ...this.req.body };
     try {
-      const cars = await this.service.create(this.req.body);
+      const cars = await this.service.create(car);
       return this.res.status(201).json(cars);
     } catch (error) {
       this.next(error);

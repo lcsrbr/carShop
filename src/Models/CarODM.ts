@@ -1,23 +1,17 @@
 import {
-  Model,
   Schema,
-  model,
-  models,
 } from 'mongoose';
-import CarsDomain from '../Domains/Car';
 import ICar from '../Interfaces/ICar';
+import AbstractODM from './AbstractODM';
 
-export default class CarModel {
-  private schema: Schema;
-  private model: Model<ICar>;
-
+export default class CarModel extends AbstractODM<ICar> {
   constructor() {
-    this.schema = new Schema<ICar>(
+    const schema = new Schema<ICar>(
       {
         model: { type: String, required: true },
         year: { type: Number, required: true },
         color: { type: String, required: true },
-        status: { type: Boolean, required: false },
+        status: { type: Boolean, required: false, default: false },
         buyValue: { type: Number, required: true },
         doorsQty: { type: Number, required: true },
         seatsQty: { type: Number, required: true },
@@ -33,25 +27,12 @@ export default class CarModel {
         },
       },
     );
-    this.model = models.Cars || model('Cars', this.schema);
+    super(schema, 'Cars');
   }
 
   public async count() {
     const cars = await this.model.countDocuments({});
     return cars;
-  }
-
-  public async create(car: CarsDomain): Promise<ICar> {
-    return this.model.create({
-      id: car.getId(),
-      model: car.getModel(),
-      year: car.getYear(),
-      color: car.getColor(),
-      status: car.getStatus(),
-      buyValue: car.getBuyValue(),
-      doorsQty: car.getDoorsQty(),
-      seatsQty: car.getSeatsQty(),
-    });
   }
 
   public async findAll() {
