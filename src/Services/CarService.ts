@@ -11,11 +11,6 @@ export default class CarService {
     return new CarDomain(car);
   }
 
-  public async count() {
-    const result = await this.carModel.count();
-    return result;
-  }
-
   public async create(param: ICar) {
     const result = await this.carModel.create(param);
     return this.getCarDomain(result);
@@ -39,5 +34,12 @@ export default class CarService {
     const result = await this.carModel.findById(id);
     if (!result) throw new HttpError(404, 'Car not found');
     return this.getCarDomain(result);
+  }
+
+  public async delete(id: string): Promise<void> {
+    const searchById = await this.carModel.findById(id);
+    if (searchById) {
+      await this.carModel.delete(id);
+    }
   }
 }

@@ -15,11 +15,6 @@ export default class MotosController {
     this.service = new MotoService();
   }
 
-  public async count() {
-    const result = await this.service.count();
-    return this.res.status(201).json({ result });
-  }
-
   public async create() {
     const moto: IMoto = { ...this.req.body };
     try {
@@ -55,6 +50,16 @@ export default class MotosController {
       const { id } = this.req.params;
       const result = await this.service.findById(id);
       return this.res.status(200).json(result);
+    } catch (error) {
+      this.next(error);
+    }
+  }
+
+  public async delete() {
+    try {
+      const { id } = this.req.params;
+      await this.service.delete(id);
+      return this.res.status(204).json();
     } catch (error) {
       this.next(error);
     }

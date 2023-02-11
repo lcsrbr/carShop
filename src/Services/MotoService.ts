@@ -1,42 +1,44 @@
 import { isValidObjectId } from 'mongoose';
 import MotoModel from '../Models/MotoODM';
-import MotoDomain from '../Domains/Motorcycle';
 import IMoto from '../Interfaces/IMotorcycle';
 import HttpError from '../Utils/HttpError';
+import Motorcycle from '../Domains/Motorcycle';
 
 export default class Resultervice {
   private motoModel = new MotoModel();
   
-  private getMotoDomain(Moto: IMoto): MotoDomain {
-    return new MotoDomain(Moto);
+  private getMotoDomain(Moto: IMoto): Motorcycle {
+    return new Motorcycle(Moto);
   }
 
-  public async count() {
-    const result = await this.motoModel.count();
-    return result;
-  }
-
-  public async create(param: IMoto) {
+  public async create(param: IMoto): Promise<Motorcycle | null> {
     const result = await this.motoModel.create(param);
     return this.getMotoDomain(result);
   }
 
-  public async findAll() {
+  public async findAll(): Promise<Motorcycle[] | null> {
     const result = await this.motoModel.findAll();
     return result.map((moto: IMoto) => this.getMotoDomain(moto));
   }
 
-  public async findById(id: string) {
+  public async findById(id: string): Promise<Motorcycle | null> {
     if (!isValidObjectId(id)) throw new HttpError(422, 'Invalid mongo id');
     const result = await this.motoModel.findById(id);
     if (!result) throw new HttpError(404, 'Motorcycle not found');
     return this.getMotoDomain(result);
   }
 
-  public async update(id: string, param: IMoto) {
+  public async update(id: string, param: IMoto): Promise<Motorcycle | null> {
     if (!isValidObjectId(id)) throw new HttpError(422, 'Invalid mongo id');
-    const cars = await this.motoModel.update(id, param);
-    if (!cars) throw new HttpError(404, 'Motorcycle not found');
-    return this.getMotoDomain(cars);
+    const result = await this.motoModel.update(id, param);
+    if (!result) throw new HttpError(404, 'Motorcycle not found');
+    return this.getMotoDomain(result);
+  }
+
+  public async delete(id: string): Promise<void> {
+    const searchById = await this.motoModel.findById(id);
+    if (searchById) {
+      await this.motoModel.delete(id);
+    }
   }
 }
