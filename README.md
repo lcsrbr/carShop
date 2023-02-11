@@ -1,13 +1,34 @@
-# :construction: README customizado em construção ! :construction:
-<!-- Olá, Tryber!
-Esse é apenas um arquivo inicial para o README do seu projeto no qual você pode customizar e reutilizar todas as vezes que for executar o trybe-publisher.
+ Para este projeto, foi aplicado os princípios de Programação Orientada a Objetos (`POO`) para a construção de uma API com `CRUD` para gerenciar uma concessionária de veículos. 
+ O projeto foi feito utilizando o banco de dados `MongoDB` através do framework do `Mongoose`.
+ 
+ 
+ # Boas-vindas ao repositório do projeto CarShop!
 
-Para deixá-lo com a sua cara, basta alterar o seguinte arquivo da sua máquina: ~/.student-repo-publisher/custom/_NEW_README.md
+<strong>Projeto realizando durante o curso de _Desenvolvimento Web da Trybe_.</strong>
 
-É essencial que você preencha esse documento por conta própria, ok?
-Não deixe de usar nossas dicas de escrita de README de projetos, e deixe sua criatividade brilhar!
-:warning: IMPORTANTE: você precisa deixar nítido:
-- quais arquivos/pastas foram desenvolvidos por você; 
-- quais arquivos/pastas foram desenvolvidos por outra pessoa estudante;
-- quais arquivos/pastas foram desenvolvidos pela Trybe.
--->
+Para acessar o projeto, atente-se a cada passo descrito a seguir, e se tiver qualquer dúvida, me envie uma _[mensagem](https://portfolio-bay-omega-17.vercel.app/contact)_ :)
+
+# Orientações
+
+  - [Acesse a documentação do projeto aqui!](https://) 
+
+  <summary><strong>‼️ Para acessar o projeto: </strong></summary><br />
+
+  1. Clone o repositório
+
+  - Use o comando: `git clone git@github.com:lcsrbr/carShop.git`.
+
+  2. Instale as dependências
+
+IMPORTANTE: necessário possuir o [Docker](https://docs.docker.com/engine/install/ubuntu/) instalado.
+rode o seguinte comando no seu terminal:
+```
+docker-compose up -d && docker exec -it car_shop bash
+```
+  3. Rode os comandos:
+```
+npm install
+npm run dev
+```
+
+  # [Outros Projetos](https://portfolio-bay-omega-17.vercel.app/projetos)
