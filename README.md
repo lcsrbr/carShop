@@ -8,7 +8,7 @@ Para acessar o projeto, atente-se a cada passo descrito a seguir, e se tiver qua
 
 # Orientações
 
-  - [Acesse a documentação do projeto aqui!](https://) 
+  - [Acesse a documentação do projeto aqui!](https://documenter.getpostman.com/view/25807192/2s935uG1ML#56e93251-caff-4851-8963-33b279c31b75) 
 
   <summary><strong>‼️ Para acessar o projeto: </strong></summary><br />
 
