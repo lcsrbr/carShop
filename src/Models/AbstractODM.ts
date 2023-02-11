@@ -30,7 +30,7 @@ abstract class AbstractODM<T> {
     return this.model.findById(_id);
   }
   public async delete(_id: string): Promise<void> {
-    await this.model.deleteOne({ id: _id });
+    await this.model.findByIdAndDelete({ _id });
   }
 
   public async update(_id: string, obj: Partial<T>): Promise<T | null> {

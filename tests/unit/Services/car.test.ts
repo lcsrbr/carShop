@@ -2,58 +2,129 @@ import { expect } from 'chai';
 import sinon from 'sinon';
 import { Model } from 'mongoose';
 import CarService from '../../../src/Services/CarService';
-import ICar from '../../../src/Interfaces/ICar';
 import CarDomain from '../../../src/Domains/Car';
+import * as M from '../../mocks/carMocks';
 
-describe('Deveria criar um novo veículo POST /cars', function () {
-  it('Deveria criar um novo veículo com sucesso', async function () {
-    // Arrange
-    const newCar: ICar = {
-      model: 'Marea',
-      year: 2002,
-      color: 'Black',
-      status: true,
-      buyValue: 15.990,
-      doorsQty: 4,
-      seatsQty: 5,
-    };
-
-    const expOutput = new CarDomain(newCar);
-    sinon.stub(Model, 'create').resolves(expOutput);
-
-    const service = new CarService();
-    const result = await service.create(newCar);   
-    expect(result).to.be.deep.equal(expOutput);
+describe('Deveria testar as rotas derivadas de /cars', function () {
+  describe('Deveria testar as rotas de criação /POST de carros', function () {
+    it('Deveria criar um novo carro com sucesso', async function () {
+      const expOutput = new CarDomain(M.newCar);
+      sinon.stub(Model, 'create').resolves(expOutput);
+      const service = new CarService();
+      const result = await service.create(M.newCar);
+      expect(result).to.be.deep.equal(expOutput);
+    });
   });
- 
-  it('Deveria listar os veículos com sucesso', async function () {
-    // Arrange
-    const carArr: ICar[] = [{
-      id: '634852326b35b59438fbea2f',
-      model: 'Marea',
-      year: 2002,
-      color: 'Black',
-      status: true,
-      buyValue: 15.990,
-      doorsQty: 4,
-      seatsQty: 5,
-    }, {
-      id: '63b59438fbea2f4852326b35',
-      model: 'Idea',
-      year: 2008,
-      color: 'Blue',
-      status: true,
-      buyValue: 19.990,
-      doorsQty: 4,
-      seatsQty: 5,
-    }];
 
-    sinon.stub(Model, 'find').resolves(carArr);
-    const service = new CarService();
-    const result = await service.findAll();   
-    expect(result).to.be.deep.equal(carArr);
+  describe('Deveria testar as rotas de retorno /GET de carros', function () {
+    it('Deveria listar os carros com sucesso', async function () {
+      sinon.stub(Model, 'find').resolves(M.carArr);
+      const service = new CarService();
+      const result = await service.findAll();
+      expect(result).to.be.deep.equal(M.carArr);
+    });
+
+    it('Deveria exibir um carro por ID', async function () {
+      sinon.stub(Model, 'findOne').resolves(M.carById);
+      const service = new CarService();
+      const result = await service.findById(M.id);
+      expect(result).to.be.deep.equal(M.carById);
+    });
+
+    it('Deveria gerar um erro na busca de um carro por ID inválido', async function () {
+      sinon.stub(Model, 'findOne').resolves({});
+      try {
+        const service = new CarService();
+        await service.findById(M.invalidId);
+      } catch (e) {
+        expect((e as Error).message).to.be.equal(M.invalidIdMessage);
+      }
+    });
+
+    it('Deveria gerar um erro na busca de um carro por ID inexistente', async function () {
+      sinon.stub(Model, 'findOne').resolves();
+      try {
+        const service = new CarService();
+        await service.findById(M.inexistentId);
+      } catch (e) {
+        expect((e as Error).message).to.be.equal(M.notFoundMessage);
+      }
+    });
+    afterEach(function () {
+      sinon.restore();
+    });
   });
-  afterEach(function () {
-    sinon.restore();
+
+  describe('Deveria testar as rotas de deleção /DELETE de carros', function () {
+    it('Deveria deletar um carro por ID', async function () {
+      sinon.stub(Model, 'findByIdAndDelete').resolves(M.carById);
+      sinon.stub(Model, 'findOne').resolves(M.carById);
+
+      const service = new CarService();
+      const response = await service.delete(M.id);
+
+      expect(response).to.be.deep.equal(undefined);
+    });
+
+    it('Deveria gerar um erro ao tentar deletar um carro por um ID inválido', async function () {
+      sinon.stub(Model, 'findByIdAndDelete').resolves();
+      sinon.stub(Model, 'findOne').resolves();
+
+      try {
+        const service = new CarService();
+        await service.delete(M.invalidId);
+      } catch (e) {
+        expect((e as Error).message).to.be.equal(M.invalidIdMessage);
+      }
+    });
+
+    it('Deveria gerar um erro ao tentar deletar um carro por um ID inexistente', async function () {
+      sinon.stub(Model, 'findByIdAndDelete').resolves();
+      sinon.stub(Model, 'findOne').resolves();
+
+      try {
+        const service = new CarService();
+        await service.delete(M.inexistentId);
+      } catch (e) {
+        expect((e as Error).message).to.be.deep.equal(M.notFoundMessage);
+      }
+    });
+    afterEach(function () {
+      sinon.restore();
+    });
+  });
+
+  describe('Deveria testar as rotas de atualizar /PUT de carros ', function () {
+    it('Deveria atualizar um carro por ID', async function () {
+      sinon.stub(Model, 'findByIdAndUpdate').resolves(M.carById);
+      const service = new CarService();
+      const response = await service.update(M.id, M.newCar);
+      expect(response).to.be.deep.equal(M.carById);
+    });
+
+    it('Deveria gerar um erro ao tentar atualizar um carro por um ID inválido', async function () {
+      sinon.stub(Model, 'findOneAndUpdate').resolves({});
+      try {
+        const service = new CarService();
+        await service.update(M.invalidId, M.newCar);
+      } catch (e) {
+        expect((e as Error).message).to.be.equal(M.invalidIdMessage);
+      }
+    });
+
+    it(`Deveria gerar um erro ao
+     tentar atualizar um carro por um ID inexistente`, async function () {
+      sinon.stub(Model, 'findOneAndUpdate').resolves(undefined);
+
+      try {
+        const service = new CarService();
+        await service.update(M.inexistentId, M.newCar);
+      } catch (e) {
+        expect((e as Error).message).to.be.equal(M.notFoundMessage);
+      }
+    });
+    afterEach(function () {
+      sinon.restore();
+    });
   });
 });
