@@ -2,6 +2,8 @@
 
 <strong>Projeto realizando durante o curso de _Desenvolvimento Web da Trybe_.</strong>
 
+Para este projeto, foram utilizados os princípios de Programação Orientada a Objetos (`POO`) para a construção de uma API com `CRUD` para gerenciar uma concessionária de veículos. Isso foi feito utilizando o banco de dados `MongoDB` através do framework do `Mongoose`.
+
 Para acessar o projeto, atente-se a cada passo descrito a seguir, e se tiver qualquer dúvida, me envie uma _[mensagem](https://portfolio-bay-omega-17.vercel.app/contact)_ :)
 
 # Orientações
