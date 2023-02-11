@@ -1,6 +1,6 @@
 import ICar from '../../src/Interfaces/ICar';
 
-export const notFoundMessage = 'Motorcycle not found';
+export const notFoundMessage = 'Car not found';
 export const invalidIdMessage = 'Invalid mongo id';
 export const id = '634852326b35b59438fbea2f';
 export const invalidId = '63c58cf07f3b663d';
