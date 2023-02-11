@@ -16,15 +16,26 @@ export default class CarsController {
   }
 
   public async count() {
-    const cars = await this.service.count();
-    return this.res.status(201).json({ cars });
+    const result = await this.service.count();
+    return this.res.status(201).json({ result });
   }
 
   public async create() {
     const car: ICar = { ...this.req.body };
     try {
-      const cars = await this.service.create(car);
-      return this.res.status(201).json(cars);
+      const result = await this.service.create(car);
+      return this.res.status(201).json(result);
+    } catch (error) {
+      this.next(error);
+    }
+  }
+
+  public async update() {
+    const { id } = this.req.params;
+    const car: ICar = { ...this.req.body };
+    try {
+      const result = await this.service.update(id, car);
+      return this.res.status(200).json(result);
     } catch (error) {
       this.next(error);
     }
@@ -32,8 +43,8 @@ export default class CarsController {
 
   public async findAll() {
     try {
-      const cars = await this.service.findAll();
-      return this.res.status(200).json(cars);
+      const result = await this.service.findAll();
+      return this.res.status(200).json(result);
     } catch (error) {
       this.next(error);
     }
@@ -42,8 +53,8 @@ export default class CarsController {
   public async findById() {
     try {
       const { id } = this.req.params;
-      const cars = await this.service.findById(id);
-      return this.res.status(200).json(cars);
+      const result = await this.service.findById(id);
+      return this.res.status(200).json(result);
     } catch (error) {
       this.next(error);
     }

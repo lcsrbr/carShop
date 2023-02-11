@@ -38,4 +38,14 @@ routes.post(
   (req, res, next) => new MotoController(req, res, next).create(),
 );
 
+routes.put(
+  '/cars/:id',
+  (req, res, next) => new CarController(req, res, next).update(),
+);
+
+routes.put(
+  '/motorcycles/:id',
+  (req, res, next) => new MotoController(req, res, next).update(),
+);
+
 export default routes;

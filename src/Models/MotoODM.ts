@@ -29,19 +29,4 @@ export default class MotoModel extends AbstractODM<IMoto> {
     );
     super(schema, 'motorcycles');
   }
-
-  public async count() {
-    const motos = await this.model.countDocuments({});
-    return motos;
-  }
-
-  public async findAll() {
-    const motos = await this.model.find({});
-    return motos;
-  }
-
-  public async findById(id: string) {
-    const motos = await this.model.findById(id);
-    return motos;
-  }
 }

@@ -16,15 +16,26 @@ export default class MotosController {
   }
 
   public async count() {
-    const motos = await this.service.count();
-    return this.res.status(201).json({ motos });
+    const result = await this.service.count();
+    return this.res.status(201).json({ result });
   }
 
   public async create() {
     const moto: IMoto = { ...this.req.body };
     try {
-      const motos = await this.service.create(moto);
-      return this.res.status(201).json(motos);
+      const result = await this.service.create(moto);
+      return this.res.status(201).json(result);
+    } catch (error) {
+      this.next(error);
+    }
+  }
+
+  public async update() {
+    const { id } = this.req.params;
+    const moto: IMoto = { ...this.req.body };
+    try {
+      const result = await this.service.update(id, moto);
+      return this.res.status(200).json(result);
     } catch (error) {
       this.next(error);
     }
@@ -32,8 +43,8 @@ export default class MotosController {
 
   public async findAll() {
     try {
-      const motos = await this.service.findAll();
-      return this.res.status(200).json(motos);
+      const result = await this.service.findAll();
+      return this.res.status(200).json(result);
     } catch (error) {
       this.next(error);
     }
@@ -42,8 +53,8 @@ export default class MotosController {
   public async findById() {
     try {
       const { id } = this.req.params;
-      const motos = await this.service.findById(id);
-      return this.res.status(200).json(motos);
+      const result = await this.service.findById(id);
+      return this.res.status(200).json(result);
     } catch (error) {
       this.next(error);
     }

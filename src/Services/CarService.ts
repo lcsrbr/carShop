@@ -12,25 +12,32 @@ export default class CarService {
   }
 
   public async count() {
-    const cars = await this.carModel.count();
-    return cars;
+    const result = await this.carModel.count();
+    return result;
   }
 
   public async create(param: ICar) {
-    const cars = await this.carModel.create(param);
-    return this.getCarDomain(cars);
+    const result = await this.carModel.create(param);
+    return this.getCarDomain(result);
+  }
+  
+  public async update(id: string, param: ICar) {
+    if (!isValidObjectId(id)) throw new HttpError(422, 'Invalid mongo id');
+    const result = await this.carModel.update(id, param);
+    if (!result) throw new HttpError(404, 'Car not found');
+    return this.getCarDomain(result);
   }
 
   public async findAll() {
-    const cars = await this.carModel.findAll();
+    const result = await this.carModel.findAll();
 
-    return cars.map((car) => this.getCarDomain(car));
+    return result.map((car) => this.getCarDomain(car));
   }
 
   public async findById(id: string) {
     if (!isValidObjectId(id)) throw new HttpError(422, 'Invalid mongo id');
-    const cars = await this.carModel.findById(id);
-    if (!cars) throw new HttpError(404, 'Car not found');
-    return this.getCarDomain(cars);
+    const result = await this.carModel.findById(id);
+    if (!result) throw new HttpError(404, 'Car not found');
+    return this.getCarDomain(result);
   }
 }

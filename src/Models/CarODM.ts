@@ -29,19 +29,4 @@ export default class CarModel extends AbstractODM<ICar> {
     );
     super(schema, 'Cars');
   }
-
-  public async count() {
-    const cars = await this.model.countDocuments({});
-    return cars;
-  }
-
-  public async findAll() {
-    const cars = await this.model.find({});
-    return cars;
-  }
-
-  public async findById(id: string) {
-    const cars = await this.model.findById(id);
-    return cars;
-  }
 }

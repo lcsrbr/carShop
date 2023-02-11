@@ -22,6 +22,18 @@ abstract class AbstractODM<T> {
     return this.model.create({ ...obj });
   }
   
+  public async findAll() {
+    return this.model.find({});
+  }
+
+  public async count() {
+    return this.model.countDocuments({});
+  }
+
+  public async findById(_id: string): Promise<T | null> {
+    return this.model.findById(_id);
+  }
+
   public async update(_id: string, obj: Partial<T>): Promise<T | null> {
     if (!isValidObjectId(_id)) throw Error('Invalid Mongo id');
   
