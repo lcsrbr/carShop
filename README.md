@@ -1,7 +1,3 @@
- Para este projeto, foi aplicado os princípios de Programação Orientada a Objetos (`POO`) para a construção de uma API com `CRUD` para gerenciar uma concessionária de veículos. 
- O projeto foi feito utilizando o banco de dados `MongoDB` através do framework do `Mongoose`.
- 
- 
  # Boas-vindas ao repositório do projeto CarShop!
 
 <strong>Projeto realizando durante o curso de _Desenvolvimento Web da Trybe_.</strong>
