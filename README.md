@@ -359,4 +359,4 @@ npm run dev
 <br>
 <br>
 
-  # [Outros Projetos](https://portfolio-bay-omega-17.vercel.app/projetos)
+  # [Outros Projetos](https://portfolio-lcsrbr.vercel.app/projects)
